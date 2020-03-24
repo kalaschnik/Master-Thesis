@@ -1,0 +1,154 @@
+\newpage
+
+\section{Non-Functional Requirements}\label{sec:Non-functional Requirements}
+
+\noindent This section derives non-functional requirements (\tracknshrink{NFR}\textsubscript{\textit{n}}) from the use cases presented at the beginning of this chapter. \autoref{tab:NFR-Overview} provides an overview of the non-functional requirements defined throughout this section.
+
+\setcounter{nfr}{1}
+\begin{table}[H]
+\centering
+\begin{tabular}{llll}
+\toprule
+\textnumero & Non-Functional Requirement & Req. Level & Category \\ 
+\midrule 
+\tracknshrink{NFR}\textsubscript{\arabic{nfr}} \stepcounter{nfr} & Dynamic Lane Height & \tracknshrink{MUST} & \acrshort*{UI} \\ 
+\tracknshrink{NFR}\textsubscript{\arabic{nfr}} \stepcounter{nfr} & eccenca \acrshort*{UI} Styling & \tracknshrink{MUST} & \acrshort*{UI} \\ 
+\tracknshrink{NFR}\textsubscript{\arabic{nfr}} \stepcounter{nfr} & Test Data & \tracknshrink{SHOULD} & Testing \\ 
+\tracknshrink{NFR}\textsubscript{\arabic{nfr}} \stepcounter{nfr} & Directory \& Component Structure & \tracknshrink{SHOULD} & Conventional \\ 
+\tracknshrink{NFR}\textsubscript{\arabic{nfr}} \stepcounter{nfr} & Linter Conformity & \tracknshrink{SHOULD} & Conventional \\ 
+\tracknshrink{NFR}\textsubscript{\arabic{nfr}} \stepcounter{nfr} & eccenca Infrastructure Integration & \tracknshrink{MUST} & Backend \\ 
+\bottomrule
+\end{tabular}
+\caption[Overview of Non-Functional Requirements (\tracknshrink{NFR})]{Overview of Non-Functional Requirements (\tracknshrink{NFR}).}
+\label{tab:NFR-Overview}
+\end{table}
+
+
+\setcounter{nfr}{0}
+
+\stepcounter{nfr}\centerline{\textbf{NFR\textsubscript{\arabic{nfr}} --- \textsc{Dynamic Lane Height}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: \acrshort*{UI}}
+
+\noindent In the second use case (see mockup on page \pageref{fig:RMB Use Case 2}), it is likely the case that a single column, within a lane, holds a vast amount of cards. Thus, reaching the lanes below becomes a scrolling intense endeavor. To avoid this issue, lanes should have a maximum height of the browser’s current viewport. If a column reaches this limit, the column itself should become a scrollable container.
+
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{avoid an ‘endless’ board,}
+        \item[] as a \textit{developer,}
+        \item[] I want to \textit{limit the lane’s height \tracknshrink{AND} make columns scrollable if they exceed that limit.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+
+
+\stepcounter{nfr}\centerline{\textbf{NFR\textsubscript{\arabic{nfr}} --- \textsc{eccenca \acrshort*{UI} Styling}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: \acrshort*{UI}}
+
+\noindent The prototype should visually match with the other eccenca components. Therefore, \acrshort*{UI} elements should rely on existing style guides.
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{visually match existing eccenca components,}
+        \item[] as a \textit{developer,}
+        \item[] I want to \textit{utilize existing \acrshort*{UI} style guides.}
+    \end{itemize}
+\end{itemize}
+
+
+
+\stepcounter{nfr}\centerline{\textbf{NFR\textsubscript{\arabic{nfr}} --- \textsc{Test Data}}}
+\centerline{\small Requirement Level: \tracknshrink{SHOULD} \quad{} Category: Testing}
+
+\noindent The \acrshort*{RMB} needs to handle a variety of special conditions or edge cases. Therefore, test data should be used to guarantee a stable processing of the prototype.
+
+\newpage
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{test the prototype under various conditions,}
+        \item[] as a \textit{developer,}
+        \item[] I want to \textit{provide test data for different scenarios.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+
+
+\stepcounter{nfr}\centerline{\textbf{NFR\textsubscript{\arabic{nfr}} --- \textsc{Directory \& Component Structure}}}
+\centerline{\small Requirement Level: \tracknshrink{SHOULD} \quad{} Category: Conventional}
+
+\noindent eccenca has elaborated a set of guidelines for front-end developers. Most importantly, developers should stick to a recommended directory and component structure for a React project. These conventions provide help for other developers, and simplify the integration of novel components into existing structures.
+
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{conform to existing structuring guidelines,}
+        \item[] as a \textit{developer,}
+        \item[] I want to \textit{follow the company’s front-end conventions.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+\stepcounter{nfr}\centerline{\textbf{NFR\textsubscript{\arabic{nfr}} --- \textsc{Linter Conformity}}}
+\centerline{\small Requirement Level: \tracknshrink{SHOULD} \quad{} Category: Conventional}
+
+% \noindent eccenca’s customized \textit{ESLint}\footnote{A code analysis tool for JavaScript: \url{https://eslint.org/}.} rule set should be used throughout developing to conform coding standards.
+
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{conform to coding standards,}
+        \item[] as a \textit{developer,}
+        \item[] I want to \textit{keep the code conform to given linter rules.}
+    \end{itemize}
+\end{itemize}
+
+
+
+\stepcounter{nfr}\centerline{\textbf{NFR\textsubscript{\arabic{nfr}} --- \textsc{eccenca Infrastructure Integration}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: Backend}
+
+\noindent The prototype utilizes various components of eccenca’s ecosystem. For example, the triple store to request and store data, various \tracknshrink{API} components (e.g., to resolve a \acrshort*{URI} to a label), or Keycloak\footnote{\url{https://www.keycloak.org/}} for authentication and identity management. To align the integration of the prototype, these services need to be used.
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{connect to eccenca’s backend services,}
+        \item[] as a \textit{developer,}
+        \item[] I want to \textit{use existing authentication methods \tracknshrink{AND} components to store and retrieve data.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+
+
+
+
+

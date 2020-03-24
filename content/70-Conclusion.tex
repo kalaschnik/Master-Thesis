@@ -1,0 +1,82 @@
+\chapter{Evaluation}
+\label{ch:Discussion}
+
+This chapter evaluates the prototype with regard to the functional and non-function requirements. Building upon this, limitations and future directions will be discussed.
+
+
+\section{Strengths of the Current Prototype}
+
+The aim of this project was to create a prototypical application that allows users to (1) visualize a certain section of a knowledge graph within a Kanban board, and to (2) modify a specific property by dragging a resource into another column.
+
+I have successfully developed a prototype that reaches both goals and can be used within eccenca’s infrastructure. The board configuration graph provides an interface to specify what resources should be displayed and what resources should be modified when relocating cards.
+
+Overall, the Resource Management Board is a novel approach in the field of visualizing and modifying \tns{RDF} resources. No previous work has so far combined the paradigm and functionality of an intuitive Kanban board environment with \tns{RDF} visualization. This makes the project an innovative contribution to the field of semantic data exploration.  
+
+
+
+
+\section{Limitations of the Current Prototype \& Future Work}\label{sec:Evaluation and Limitations}
+
+Despite the strengths of the developed prototype, the current application state has limitations. Coming back to the functional requirements provided in \autoref{tab:FR-Overview}, the final prototype is to date mainly limited with regard to the following three requirements that have not been (or only partially) implemented: 
+
+\begin{itemize}
+\setlength\itemsep{-0.5em}
+    \item \tns{FR}\textsubscript{7}\hspace*{3pt} — Disallow Column/Lane Repositioning
+    \item \tns{FR}\textsubscript{11} — Create New Columns
+    \item \tns{FR}\textsubscript{13} — \tns{SPARQL} Editor
+\end{itemize}
+
+\noindent \paragraph{\tns{FR}\textsubscript{7}} Although alphabetical sorting might be an appropriate sorting strategy for swimlanes (as requested in \tns{FR}\textsubscript{7}), it is not immediately suitable for columns. In a Kanban board, column labels typically carry a semantic meaning about progress (or progress order). Humans are intuitively capable of sorting such labels. For example, the sequence \tracknshrink{|\,\textit{Done}\,|\,\textit{ToDo}\,|\,\textit{Doing}\,|} does not make direct sense to us, whereas \tracknshrink{|\,\textit{ToDo}\,|\,\textit{Doing}\,|\,\textit{Done}\,|} does.
+
+Nevertheless, there are some use cases in which alphabetical sorting would be possible, namely when column labels do not contain any inherent sequencing information. This would, for example, be the case in the first mockup from the introduction (see \autoref{fig:White Marble Kanban Board}), with the column labels \textit{White} and \textit{Red}. The order of columns would be solely up the user’s preference in this case. To give another example: if column labels would express blood types,\footnote{The work of Bursa et al. (2017) extends \tns{FOAF} by a \textit{Blood Ontology}, see \url{https://www.researchgate.net/publication/319633737_BloodHealthFOAF_Extending_FOAF_with_Blood_Ontology}.} alphabetic sorting would be principally possible as different blood types do not carry any meaning of progress.
+
+Similar to statistical datatypes, two different types of column semantics can be differentiated, namely categorical and ordinal columns. Categorical column labels are more likely to be reordered as compared to columns with ordinal labels, as different users have different preferences. Therefore, in order to obtain a meaningful progress flow, users should be allowed to rearrange columns, which was performed in \autoref{fig:06IssueTracking} to maintain a meaningful flow. A central limitation of the prototype is that even though users can change the column order, it would not be persistent after refreshing the board, meaning that it would change back to the initial (alphabetical) order.
+
+An important future direction would be an application that allows users to store their preferred column position, regardless of any column semantics. To address this current limitation, the \textit{Ordered List Ontology} (\tns{OLO}) could be used, as it provides an index property,\footnote{\url{http://purl.org/ontology/olo/core\#index}} that uses a positive integer to store a position. The new column position could be retrieved by react-trello using the provided method \texttt{handleLaneDragEnd}.\footnote{See \url{https://github.com/rcdexta/react-trello/blob/master/README.md\#callbacks-and-handlers}.} The board configuration itself might be a suitable place to store this sequencing information, compared to cards, which would create unnecessary noise in card resources.
+
+
+\noindent \paragraph{\tns{FR}\textsubscript{11}} The current application state is furthermore limited in that it only allows to create new columns if the column value is of type \texttt{literal}. If column values are of type \texttt{uri}, the \textit{Add Column} button will not be displayed (see \autoref{fig:03FOAF} and \autoref{fig:04UNESKOS} for corresponding examples with literal-typed columns, and \autoref{fig:05DatasetMGMT} and \autoref{fig:06IssueTracking} for examples with uri-types columns). While it is relatively effortless to resolve the label of a resource, it is challenging to do the opposite: A user enters a new column value as a string, and the corresponding resource needs to be found. This approach is prone to errors in many ways, as there is virtually an unlimited amount of possible character combinations a user might enter, and moreover, a single label may refer to multiple resources (e.g., \acrshort{rdfs}\texttt{Class} and \acrshort{owl}\texttt{Class} share the same label (i.e., \textit{Class}), despite being different resources). An alternative solution would be to provide text suggestions to the user based on predefined column values.
+
+\noindent \paragraph{\tns{FR}\textsubscript{13}} If users want to review the \tns{SPARQL} query, they can toggle the corresponding \tns{UI} element to reveal the \textit{\tns{SPARQL} View} (see \autoref{fig:02SPARQLView} and \tns{FR}\textsubscript{12}). This component reflects the auto-composed query of stage {\small \hyperref[ssec:QS-C]{\(\mathcal{C}\)}} in \autoref{fig:RMBProcessFlow}, which is responsible for retrieving the elements that are displayed on the board. The possibility to make changes in this field (\tns{FR}\textsubscript{13}) is in the current implementation restricted to the \tns{SPARQL} \texttt{LIMIT} value. The current implementation works by a regular expression check for a change of the limit’s value within the \textit{\tns{SPARQL} View}. If a user changes this value and clicks the \textit{Draw from Query} button, the board will refresh while respecting the new board limit. Future work should extend this feature by regex-checking for other board and card component resources.
+
+
+\subsection*{Exit Value, Exit Column, \& Dwell Time}
+
+Another limitation of the current prototypical state is that it does not allow cards to disappear from the board. As an example, consider the use case of issue tracking (see \autoref{fig:06IssueTracking}): When ordering the columns sequentially, the last column in this board has the label \textit{fixed}. Since cards cannot progress beyond this last column, it would eventually clutter up with cards.
+
+One possible approach to address this issue would be to define an \textit{exit value} within the board configuration, whereby the property of the exit value needs to match the config’s column property. The exit value, in this case, would be \textit{fixed} (or rather the resource \acrshort{dbug}\texttt{fixed}), matching the config’s column property (i.e., \acrshort{dbug}\texttt{status}). Conceptually, this board configuration would designate the ‘\textit{fixed} column’ to the \textit{exit column}. 
+
+Furthermore, the board configuration needs to define a \textit{dwell time} property,\footnote{Especially, a \acrshort{owl}\texttt{DatatypeProperty}, similar to the board limit definition.}. This property accepts an integer value, which expresses the number of days a card is allowed to dwell in a column before it is supposed to disappear. That means that the exit value, dwell time, and a card’s modified property indicate whether a resource should be depicted on the board or not.
+
+
+
+
+% - multiple lane values with the same label e.g. use case 1 Class. elements have multiple types defined and sample does random chooses
+% --- sorting is not stable
+
+%  - infobox might show how many columns and lanes also
+
+
+
+
+
+\subsection*{Information on Breaking Changes}
+
+The following two breaking changes need to be considered for the future development of the current prototype.
+
+\paragraph{React 15.x} As of 2019, eccenca’s front-end codebase is below React version 16. This means that react-trello version 2.0.7 is the last supported version working with React 15.x. This is due to react-trello’s dependency of styled-components, which is a library to write and manage \tracknshrink{CSS} in JavaScript. Nevertheless, react-trello 2.0.7 requires styled-components 3.4.10 which, in turn, have a react peer dependency of: \texttt{"react": ">= 0.14.0 < 17.0.0-0"},\footnote{Line 153 at \url{https://github.com/styled-components/styled-components/blob/v3.4.10/package.json\#L153}} (which is within the boundaries of React 15.x). This will change with react-trello version 2.0.8 since it requires version 4.0.3 of styled-components with a react peer dependency of: \texttt{"react": ">= 16.3.0"},\footnote{Line 135 at \url{https://github.com/styled-components/styled-components/blob/v4.0.3/package.json\#L135}} which will break the board.
+
+\paragraph{Custom Cards Update} From react-trello version 2.1 to 2.2, there have been breaking changes regarding the definition of custom cards. The react-trello creator has released upgrade instructions containing the affected code lines and necessary changes, respectively: \url{https://github.com/rcdexta/react-trello/blob/master/UPGRADE.md}. Note that this breaking change could not be addressed in the project, as the prior breaking change has restricted development by forcing it to remain on version 2.0.7.
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,55 @@
+% https://esc-now.de/_/latex-individuelle-kopf--und-fusszeilen-update/?lang=en
+
+\setlength{\headheight}{1.1\baselineskip} % Größe des Headers
+
+
+% \usepackage[headsepline,autooneside=false]{scrlayer-scrpage}
+% \automark[subsection]{section}
+% \renewcommand*{\sectionmarkformat}{}
+% \renewcommand*{\subsectionmarkformat}{}
+
+% \newmarks\chaptermarkwithnum
+% \makeatletter
+% \renewcommand\chaptermark[1]{%
+%   \begingroup
+%     \let\label\relax \let\index\relax \let\glossary\relax
+%     \@temptokena{\ifnumbered{chapter}{\chaptermarkformat}{}#1}%
+%     \unrestored@protected@xdef\@themark{\the\@temptokena}%
+%     \@temptokena\expandafter\expandafter{\expandafter\MakeMarkcase\expandafter{\@themark}}%
+%   \marks\chaptermarkwithnum{\the\@temptokena}%
+%   \endgroup
+%   \markboth{}{}%
+% }
+% \makeatother
+
+% \clearpairofpagestyles
+% \ihead{%
+%   \textsc{\firstmarks\chaptermarkwithnum}
+%   \ifstr{\leftbotmark}{}{}{
+%    --- \leftbotmark\ifstr{\rightbotmark}{\leftbotmark}{}{ --- \rightbotmark}%
+%   }%
+% }
+
+% \rohead{\pagemark}
+
+
+%% only use Chapter and Section in running head
+\usepackage[headsepline,automark,autooneside=false]{scrlayer-scrpage}
+\clearpairofpagestyles
+\ihead{\textsc{\leftmark}\ifstr{\small{\rightmark}}{\textsc{\leftmark}}{}{ --- \small{\rightmark}}}
+
+% remove section numbers before section text 
+\renewcommand*{\sectionmarkformat}{} 
+\rohead{\pagemark}
+
+\usepackage[hang]{footmisc}
+\usepackage{chngcntr} % make footnotes contd counting
+\setlength{\skip\footins}{1em} % change space between footnote and text
+\counterwithout{footnote}{chapter} % make footnotes contd counting
+\setlength{\footnotemargin}{3mm}	% margin between footnote number and text
+
+\usepackage{tablefootnote} % use for footnotes in tables
+% \begin{tabular}{l}
+% Content\footnotemark\\
+% \end{tabular}
+% \footnotetext{Footnote}

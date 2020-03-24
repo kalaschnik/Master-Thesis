@@ -1,0 +1,49 @@
+\chapter{Requirements}\label{ch:Requirements}
+
+\noindent This chapter provides an overview of use cases, user stories, and requirements for the current project. In general terms, a \textit{use case} describes a specific usage scenario for a software product and carries a variety of software \textit{requirements}, which, in turn, describe a specific functionality demanded by a stakeholder (e.g., a user). A \textit{user story} is similar to a requirement. It also describes the request by a certain persona; however, in contrast to a requirement, it is composed of natural language. \textcite[5]{Jacobson2011} describes the relation between the three terms as follows:
+
+\begin{displayquote}
+\hspace*{-1.4mm}``To understand a use case we tell stories [\textellipsis{}] Use cases provide a way to identify and capture all the different but related stories in a simple but comprehensive way. This enables the system’s requirements to be easily captured, shared and understood.''
+\flushright{\cite[5]{Jacobson2011}}
+\vspace*{1em}
+\end{displayquote}
+
+\noindent The field of requirements engineering differentiates between many different types (or categories) of requirements. The current work focuses on two main types, namely functional and non-functional requirements. As defined by the \tracknshrink{ISO}/\tracknshrink{IEC}/\tracknshrink{IEEE’s} \textit{Systems and Software Engineering Vocabulary}, a functional requirement is: (1) \textit{``a statement that identifies what a product or process must accomplish to produce required behavior and/or results''} and (2) \textit{``a requirement that specifies a function that a system or system component must be able to perform''} \parencite[see][301]{IEEEVocabulary}. A non-functional requirement, on the other hand, is \textit{``a software requirement that describes not what the software will do but how the software will do it.''} \parencite[see][231]{IEEEVocabulary}. To give an example: An crucial functional requirement of an elevator is to transport things from one floor to another. A non-functional requirement, in contrast, might be at what speed the elevator should perform this task. In the domain of software development, typical examples for non-functional requirements include the performance of an application, its response times, reliability, aspects around documentation, and in-house coding style guides.\footnote{An extensive list of categorized examples can be found here: \url{https://dalbanger.wordpress.com/2014/01/08/a-basic-non-functional-requirements-checklist/}.}
+
+Generally, user stories describe requirements. In contrast to requirements, however, they are composed of natural language and use a predefined template \parencite[see][]{Amber2014}. There is a variety of templates that can be used to create a user story. The pattern used by eccenca and throughout this work is constructed as follows: “In order to \textit{<benefit/outcome>}, as a \textit{<persona/role>}, I want to \textit{<description>}.” Additionally, user stories can be marked with story points, which aim to predict the level of complexity \parencite{Amber2014}. However, according to various online sources, vain efforts have been previously made regarding the use of story points (see, e.g., \cite{Jailall2018}, \cite{Kerievsky2012}, \cite{Krimmer2017}). As major challenges, most articles report the frustrating attempt to estimate the time and complexity of story points. As a consequence, story points needed to be repeatedly re-evaluated during the development phase.
+
+To avoid these challenges, this chapter focuses on the use of \textit{Requirement Levels} \parencite[see][]{Bradner1997}, which---in contrast to story points---aims for the actual importance of a specific requirement rather than measuring time/complexity. \autoref{tab:RFC} provides an overview of \citeauthor{Bradner1997}’s five requirement levels.
+
+
+\begin{table}[ht]
+\small
+\centering
+\begin{tabular}{p{2.9cm}p{11.7cm}}
+\toprule
+Key Word \newline \footnotesize{\textit{Synonyms}} & Meaning \\
+\midrule
+MUST \newline \footnotesize{\textit{REQUIRED, SHALL}} & \textit{``[\textellipsis{}] absolute requirement of the specification.''} \\ \addlinespace
+SHOULD \newline \footnotesize{\textit{RECOMMENDED}} & \textit{``[\textellipsis{}] the particular behavior is acceptable or even useful [\textellipsis{}]''} \\ \addlinespace
+MAY \newline \footnotesize{\textit{OPTIONAL}} & \textit{``[\textellipsis{}] an item is truly optional. [\textellipsis{}]''} \\ \addlinespace % \midrule
+SHOULD NOT \newline \footnotesize{\textit{NOT RECOMMENDED}} & \textit{``[\textellipsis{}] ignore a particular item [\textellipsis{}]''} \\ \addlinespace
+MUST NOT \newline \footnotesize{\textit{SHALL NOT}} & \textit{``[\textellipsis{}] absolute prohibition of the specification.''} \\ \bottomrule
+\end{tabular}
+\caption[Requirement Levels]{Requirement Levels \parencite[1]{Bradner1997}}
+\label{tab:RFC}
+\end{table}
+
+\noindent Finally, a use case contains a variety of requirements and user stories, equally. Use cases explore different fields of application and describe a broader goal. According to \textcite{Burris}, a use case is \textit{``\textellipsis{}~a narrative description of a goal-oriented interaction between the system under development and an external agent.''} Another purpose of a use case is to demonstrate the benefits of the software product.
+
+The following \autoref{sec:Use Cases} describes four use cases demonstrating application fields of the prototype. In the two succeeding sections, functional (\autoref{sec:Functional Requirements}) and non-functional requirements (\autoref{sec:Non-functional Requirements}) will be derived from the presented use cases. Eventually, the last section in this chapter, \autoref{sec:Requirements Overview}, provides a summary of the described requirements. 
+
+
+
+
+\section{Use Cases}\label{sec:Use Cases}
+
+All use cases utilize either constructed or existing \acrshort*{RDF} data to demonstrate their intentions, and each use case contains the following four subdivisions: (1) an outline describing the purpose of the current use case, (2) the board component resources (i.e., the resources for cards, column, and, if applicable, lanes) providing information about the used classes and domains for each structural component, (3) the card component resources describing what elements will be depicted on the cards, and (4) a mockup of the \acrshort*{RMB} depicting the current use case.
+
+At this stage, it is worth mentioning that there are three independent features shared by all use cases: (1) All cards should display their resource identifier (i.e., their \acrshort*{URI}), to provide an easy look-up reference to the user, (2) when clicking a card, more information about that specific resource should be revealed, and (3) a timestamp property (i.e., the \textit{last modification date}) should be stored within a resource whenever a card gets dropped to a new column. Furthermore, all cards containing such a timestamp property should also display it by default.
+
+
+

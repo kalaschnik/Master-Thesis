@@ -1,0 +1,45 @@
+% \usepackage[grid,gridcolor=black!40,subgridcolor=black!20]{eso-pic} % this shows a grid that helps adjusting stuff
+
+
+\usepackage{draftwatermark}
+\SetWatermarkText{DRAFT}
+\SetWatermarkLightness{0.85}
+% \SetWatermarkAngle{45}
+% \SetWatermarkColor[rgb]{0,1,0} or {red}
+% \SetWatermarkFontSize{96pt}
+% \SetWatermarkScale{}
+% \SetWatermarkHorCenter{12}
+% \SetWatermarkVerCenter{}
+
+
+%% comment this section in if you want the overlay to appear on the margins
+\SetWatermarkAngle{90}
+\makeatletter
+\renewcommand\sc@watermark{%
+  \setlength{\@tempdimb}{.072\paperwidth}% change here as you need horiz pos
+  \setlength{\@tempdimc}{-.5\paperheight}%  change vertical pos
+  \put(\strip@pt\@tempdimb,\strip@pt\@tempdimc){%
+    \makebox(0,0){\rotatebox{\sc@wm@angle}{%
+        \scalebox{\sc@wm@scale}{%
+          \expandafter\expandafter\expandafter\textcolor
+          \expandafter\sc@wm@colormodel\expandafter{\sc@wm@colorspecs}{%
+            \fontsize{\sc@wm@fontsize}{1.2\sc@wm@fontsize}
+            \selectfont
+            \sc@wm@text}}}}}}
+\makeatother
+
+
+% defines a switch: \draftwatermarkon and \draftwatermarkoff
+\makeatletter
+\let\originalsc@watermark\sc@watermark
+\newcommand{\draftwatermarkon}{%
+  \let\sc@watermark\originalsc@watermark
+}
+\newcommand{\draftwatermarkoff}{%
+  \let\sc@watermark\@empty
+}
+\makeatother
+
+% set it of initially, then turn it on by placing \draftwatermarkon
+% and toggle it if when it is only for a certain section
+\draftwatermarkoff

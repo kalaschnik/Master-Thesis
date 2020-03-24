@@ -1,0 +1,35 @@
+\section{Technology Stack}\label{sec:TechStack}
+
+The current project was encapsulated within eccenca’s existing ecosystem. Due to the user-centric nature of this work, most technologies involved during the development of the prototype were all based around front-end frameworks and their corresponding build workflow. However, as the prototype relied on the solutions provided by eccenca’s \textit{Corporate Memory}, some interfaces were back-end based, such as the triplestore database, and authorization functionality.
+
+As indicated in the specification section of the previous chapter, the prototype has been developed using React.\footnote{GitHub Repository: \url{https://github.com/facebook/react}.} That is a JavaScript library for building user interfaces, having its strengths in performance, and its appealing approach to use JavaScript render the \tracknshrink{HTML} \tracknshrink{DOM}. Specifically, React refers to this method as \acrfull*{JSX}. \autoref{lst:react-example} illustrates the basic concept of React.
+
+\begin{spacing}{0.9}
+    \lstset{language=JavaScript}
+    \begin{lstlisting}[
+    label={lst:react-example},
+    xleftmargin=10em, % this needs to be manually adjusted to center the frame
+    xrightmargin=-10em, % this needs to be manually adjusted to center the frame
+    caption={[Basic React Example]Basic React example.}]
+/* React Component */
+render() {
+  const myIRI = 'http://example.com/ns/rmb/thesis#react-example';
+  const myJSX = <p>Hi, I am JSX! My IRI is: {myIRI}</p>
+    return (
+      <div>
+        {myJSX}
+      </div>
+    );
+}
+    \end{lstlisting}
+\end{spacing}
+
+\noindent The React coding guidelines, as well as the React community in general, encourage developers to use a modern JavaScript syntax. Therefore, the usage of JavaScript represented a fundamental requirement during the development process. The \tracknshrink{CSS} was composed using the preprocessor language \tracknshrink{SCSS}, and the entire front-end project was streamlined using Gulp, which is a build system and task runner\footnote{This involves tasks around minification, concatenation, cache busting, or linting.} when compiling the code.  
+
+To establish (a) the underlying board configuration graph and (b) the query strategy, technologies around the \textit{Semantic Web Stack}\footnote{More information: \url{https://en.wikipedia.org/wiki/Semantic_Web_Stack}.} were used. Both procedures were specified in the previous chapter. More detailed information around web technologies and the semantic web stack can be found here: 
+
+\begin{itemize}%[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+    \item \url{https://developer.mozilla.org/en-US/docs/Web}
+    \item \url{https://jena.apache.org/tutorials/index.html}
+\end{itemize}

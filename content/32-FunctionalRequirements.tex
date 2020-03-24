@@ -1,0 +1,681 @@
+\newpage
+
+\section{Functional Requirements}\label{sec:Functional Requirements}
+
+
+\noindent This section derives functional requirements (\tracknshrink{FR}\textsubscript{\textit{n}}) from the use cases presented at the beginning of this chapter. Each requirement will be described in terms of its specific requirement level (as described in the beginning of this chapter) and main category. In addition, each requirement will contain a brief description and a dedicated user story. Note that requirements are not derived for an individual use case but for the sum of all use cases. \autoref{tab:FR-Overview} provides an overview of the functional requirements, described in detail in the following.
+
+\setcounter{fr}{1}
+\begin{table}[H]
+\centering
+\begin{tabular}{llll}
+\toprule
+\textnumero & Functional Requirement & Req. Level & Category \\ 
+\midrule 
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Board Configuration & \tracknshrink{MUST} & Feature \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Defaults Values & \tracknshrink{MUST} & Feature \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Board Selection & \tracknshrink{MUST} & Feature \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Drag \& Drop Cards & \tracknshrink{MUST} & Feature \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Swimlanes & \tracknshrink{MUST} & Feature \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Disallow Card Drop On Adjacent Lanes & \tracknshrink{MUST NOT} & Feature \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Disallow Column/Lane Repositioning & \tracknshrink{SHOULD NOT} & Feature \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & No Property Column & \tracknshrink{MUST} & Feature \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Delete Property & \tracknshrink{SHOULD} & Feature \\ 
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Everything Else Swimlane & \tracknshrink{MUST} & Feature \\ 
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Create New Columns & \tracknshrink{MUST} & Feature \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & \acrshort*{SPARQL} Viewer & \tracknshrink{SHOULD} & Feature \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & \acrshort*{SPARQL} Editor & \tracknshrink{MAY} & Feature \\ 
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Show Resources as Cards & \tracknshrink{MUST} & Feature \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Board \& Component Titles & \tracknshrink{MUST} & \acrshort*{UX} \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Card Resource Identifier & \tracknshrink{MUST} & \acrshort*{UX} \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Card Description & \tracknshrink{MUST} & \acrshort*{UX} \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Card Additional Properties & \tracknshrink{MUST} & \acrshort*{UX} \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Card Modified Timestamp & \tracknshrink{MUST} & \acrshort*{UX} \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Card Click Dialog & \tracknshrink{MUST} & \acrshort*{UX} \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Refresh Board & \tracknshrink{SHOULD} & \acrshort*{UX} \\ 
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Loading Spinner & \tracknshrink{MUST} & \acrshort*{UX} \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Resource Count Infobox & \tracknshrink{MUST} & \acrshort*{UX} \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Show Warnings & \tracknshrink{MUST} & \acrshort*{UX} \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Highlight No Property Column & \tracknshrink{SHOULD} & \acrshort*{UX} \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Real-Time Timestamp Update & \tracknshrink{MUST} & \acrshort*{UX} \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Real-Time Colored Cards & \tracknshrink{SHOULD} & \acrshort*{UX} \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Trim Long Text & \tracknshrink{MUST} & \acrshort*{UX} \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Relative Time & \tracknshrink{SHOULD} & \acrshort*{UX} \\
+\tracknshrink{FR}\textsubscript{\arabic{fr}} \stepcounter{fr} & Tooltips & \tracknshrink{MUST} & \acrshort*{UX} \\
+\bottomrule
+\end{tabular}
+\caption[Overview of Functional Requirements]{Overview of Functional Requirements (\tracknshrink{FR}).}
+\label{tab:FR-Overview}
+\end{table}
+
+
+\newpage
+
+
+% reset counter
+\setcounter{fr}{0}
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Board Configuration}}}
+
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: Feature}
+
+\noindent Initially, a user---or a resource manager---can define the components being displayed on a board (i.e., board and card component resources). This board configuration (or board config) is controlled from the ‘outside’ of the actual board implementation. In the context of this work, eccenca’s \textit{DataManager} is used to create or edit a board configuration (as introduced in \autoref{ch:Introduction}).
+
+Note that the list of properties below is part of a prototypical application state. This means, that these properties represent the set of features which should be initially supported by the board configuration of the \acrshort*{RMB}.
+
+
+\begin{itemize}[after=\vspace{1em}]\label{FR1}
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{create a new board \tracknshrink{OR} edit an existing one,}
+        \item[] as a \textit{resource manager,}
+        \item[] I want to \textit{define/select the resources for every component of the board.}
+    \end{itemize}
+    \vspace*{2mm}
+    \item[] Property \tabto*{36.5mm} Description (* denotes required fields)\\[-7mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item \small{Name* \tabto*{28mm} the name of the board}
+        \item \small{Description \tabto*{28mm} a descriptive text on the intention of the board}
+        \item \small{Board Limit \tabto*{28mm} integer value used to set the limit of shown cards on a board}
+        \item \small{Graph* \tabto*{28mm} the knowledge graph which is used to get the cards from}
+        \vspace*{0.3em}
+        \item[] \small{Board Component Resources}
+        \begin{itemize}[before=\vspace*{-.5em}]
+        \setlength\itemsep{-0.5em}
+        \item \small{Cards* \tabto*{20.8mm} which card class(es) (i.e., resources) should be shown in the board}
+        \item \small{Columns* \tabto*{20.8mm} the mutation property and the initial card-to-column allocation}
+        \item \small{Lanes \tabto*{20.8mm} the property for the initial card-to-lane allocation}
+        \end{itemize}
+        \vspace*{0.3em}
+        \item[] \small{Card Component Resources}
+        \begin{itemize}[before=\vspace*{-.5em}]
+        \setlength\itemsep{-0.5em}
+        \item \small{Description \tabto*{20.8mm} the property which is used to fill the card body}
+        \item \small{Additional P. \tabto*{20.8mm} relation pointing to properties, used to show additional fields on the cards}
+        \item \small{Modified \tabto*{20.8mm} the property which is used to show a timestamp}
+        \end{itemize}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Default Values}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: Feature}
+
+\noindent In some situations, default values can serve the user’s interest. This is, for example, the case when a user forgets to define a description property, although the requested cards contain one. Moreover, a default value for the board limit will prevent loading all cards from a giant graph.
+
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{catch a faulty board configuration,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{see a card’s description in any way, and an implicit card limit to prevent a stalling browser.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Board Selection}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: Feature}
+
+\noindent The \acrshort*{UI} for the \acrshort*{RMB} should allow users to display all available boards by their name property defined in the board configuration (see \tracknshrink{FR}\textsubscript{1}). Selecting a board will trigger the render process and eventually let the board appear below the selection element.
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{select my desired board,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{see a list of available boards within the board’s \acrshort*{UI}.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Drag \& Drop Cards}}}
+
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: Feature}
+
+\noindent A Kanban board---at the most basic level---allows a user to drag cards from one column to another. This action indicates a visual progress or update, and, regarding one goal of this work, relocating cards will modify the underlying knowledge graph by a specific property.
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{indicate card’s progress \tracknshrink{AND} to update a card’s column property,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{drag cards into other columns.}
+    \end{itemize}
+\end{itemize}
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Swimlanes}}}
+
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: Feature}
+
+\noindent As illustrated by the previous use cases, a user can define the desired swimlane resource within the board configuration (see \tracknshrink{FR}\textsubscript{1}). This makes it necessary to display swimlanes within the board of the current work. Note that, swimlanes are not used in all cases, as some Kanban solutions do not support them (e.g., \textit{Trello}\footnote{\url{https://trello.com/}}).
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{further group the data being displayed,}
+        \item[] as a \textit{developer,}
+        \item[] I want to \textit{support swimlanes within the prototype.}
+    \end{itemize}
+\end{itemize}
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Disallow Card Drop On Adjacent Lanes}}}
+
+\centerline{\small Requirement Level: \tracknshrink{MUST NOT} \quad{} Category: Feature}
+
+\noindent One could argue about whether or not it should be possible to move cards from their ‘parental’ swimlane to an adjacent lane. In this work, however, lanes are grouping cards that share the same context (as illustrated in \autoref{fig:White Marble Kanban Board}). It would therefore not be desirable to move cards to a misleading domain context. For example, the resource \textit{Deforestation} in \autoref{fig:RMB Use Case 2} belongs to the domain of \textit{Agriculture} (i.e., its lane). It should only be allowed to move this resource between columns within its parental container, as moving it to \textit{Americas and the Caribbean} would lead to a misleading context.
+
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{protect a card’s broader context,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{move cards only within the parent lane container.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Disallow Column/Lane Repositioning}}}
+
+\centerline{\small Requirement Level: \tracknshrink{SHOULD NOT} \quad{} Category: Feature}
+
+\noindent The subject of column and lane order is discussed in \autoref{ch:Discussion} of this work as various aspects require further research, such as the lack of any sequencing information within \acrshort*{RDF} resources (and correspondingly the lack of information about the exact board position of a resource). Thus, as a rudimentary sorting strategy, the prototype will sort column and lane titles alphabetically.
+
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{prevent a column and lane re-ordering,}
+        \item[] as a \textit{developer,}
+        \item[] I want to \textit{prohibit the drag capabilities for columns and lanes.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{No Property Column}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: Feature}
+
+\noindent As shown in the second use case (\tracknshrink{UNESCO} Term Status), a column property is defined. However, it is not defined for a single resource. Nevertheless, the board should render the data in any way to further work with the data. This means, that a fallback column labeled with \textit{no property} should be provided, if resources lack the requested column property. This condition is, for example, illustrated in the \acrshort*{RMB} mockup of the second use case (see \autoref{fig:RMB Use Case 2}.
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{assign resources, that lack the requested column property, to a valid value,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{move them away from the no property column.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Delete Property}}}
+\centerline{\small Requirement Level: \tracknshrink{SHOULD} \quad{} Category: Feature}
+
+\noindent If a user drops a card into the \textit{no property} column the corresponding column property should be removed.
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{remove the column property from a resource,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{drop the corresponding card to the no property column.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Everything Else Swimlane}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: Feature}
+
+\noindent Similar to the previous condition, resources may lack the requested swimlane property. Therefore, a fallback swimlane should be provided at the very bottom of the board labeled with \textit{Everything Else}.
+
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{display resources that lack the requested lane property,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{manage them away in a dedicated lane.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Create New Columns}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: Feature}
+
+\noindent In some scenarios, a desired column value is not present on the board. This is the case when (a) the value is not defined in all of the resources being displayed, or (b) the implicit board limit prevents the resource to display the desired column value. Moreover, as outlined in the second use case, a user may intend to assign the desired property from scratch by creating an arbitrary amount of new column values.
+
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{assign cards to not existing values,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{create new columns.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{\acrshort*{SPARQL} Viewer}}}
+\centerline{\small Requirement Level: \tracknshrink{SHOULD} \quad{} Category: Feature}
+
+\noindent For some advanced users, it can be helpful to review the \acrshort*{SPARQL} request, which is responsible for displaying the board. Therefore, the corresponding query should displayable to the user in an unobtrusive manner.
+
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{review what resources got rendered to the board,}
+        \item[] as a \textit{resource manager,}
+        \item[] I want to \textit{inspect the responsible \acrshort*{SPARQL} request.}
+    \end{itemize}
+\end{itemize}
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{\acrshort*{SPARQL} Editor}}}
+\centerline{\small Requirement Level: \tracknshrink{MAY} \quad{} Category: Feature}
+
+\noindent Moreover, it can be helpful to modify the \acrshort*{SPARQL} query to test/debug different aspects without touching the actual board configuration (\tracknshrink{FR}\textsubscript{1}). For example, users can manipulate the board’s limit by directly editing the \tracknshrink{SPARQL’s} \tracknshrink{\texttt{LIMIT}} within the \textit{\acrshort*{SPARQL} Viewer}.
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{provide a \acrshort*{SPARQL} interface,}
+        \item[] as a \textit{resource manager,}
+        \item[] I want to \textit{modify the query within the \textit{\acrshort*{SPARQL} Viewer}.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Show Resources as Cards}}}
+
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: Feature}
+
+\noindent \acrshort*{RDF} resources should be represented by cards of the board. In this context, resources refer to the selected card class(es) in the board configuration (\tracknshrink{FR}\textsubscript{1}).
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{overview all the selected resources for my card class(es),}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{see cards on the board that represent \acrshort*{RDF} resources.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Board \& Component Titles}}}
+
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: \acrshort*{UX}}
+
+\noindent Each board should depict their title at the top of the board, whereas the board’s description should be placed below. To identify the board’s structure and semantics, column and lane titles should be placed accordingly. Likewise, cards should depict their title in a salient manner (similar as depicted by the mockups). If the title of an element is not of type literal, it should match the corresponding value of the \acrshort*{RDF} label property.
+
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{identify the board’s structure and semantics,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{see all the corresponding titles.}
+    \end{itemize}
+\end{itemize}
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Card Resource Identifier}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: \acrshort*{UX}}
+
+\noindent Since all resources have an identifier (i.e., their \acrshort*{IRI}), it should be depicted on a card. The \acrshort*{IRI} should render as a clickable link in case it is an actual \acrshort*{URL}.
+
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{know \tracknshrink{AND} possible access the resource identifier,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{see the resource’s \acrshort*{URI} in the card.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Card Description}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: \acrshort*{UX}}
+
+\noindent Resources can consist of a description property that describes their purpose (e.g., the terms in the \acrshort*{FOAF} vocabulary from the first use case). If a description property is defined on a resource, it should be shown below the card’s title (e.g., \autoref{fig:RMB Use Case 1}).
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{better understand a card’s purpose,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{see the card’s description.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Card Additional Properties}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: \acrshort*{UX}}
+
+\noindent Different use cases have different requirements regarding the properties displayed on the card. As illustrated by the mockups for use case 3 and 4 (see \autoref{fig:RMB Use Case 3} and \autoref{fig:RMB Use Case 4}, resp.), additional properties can be used to flexibly display an arbitrary amount to resources.
+
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{display an arbitrary amount of properties and their values on a card,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{define additional properties.}
+    \end{itemize}
+\end{itemize}
+
+\newpage
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Card Modified Timestamp}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: \acrshort*{UX}}
+
+\noindent A modified timestamp can be used to indicate whether a card has been moved or not, since it displays the exact time point when a card has been dropped the last time. 
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{know if a card was moved and when,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{see the last modification timestamp for these cards.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Card Click Dialog}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: \acrshort*{UX}}
+
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{provide detailed information for a particular resource,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{click on cards to see a dialog.}
+    \end{itemize}
+\end{itemize}
+
+ 
+ 
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Refresh Board}}}
+\centerline{\small Requirement Level: \tracknshrink{SHOULD} \quad{} Category: \acrshort*{UX}}
+
+\noindent When users change certain properties within the card click dialog (e.g., the title of the card), the board should reflect these changes immediately.
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{view my recent updates,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{refresh the board within the card dialog.}
+    \end{itemize}
+\end{itemize}
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Loading Spinner}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: \acrshort*{UX}}
+
+\noindent When interacting with the prototype, there are many situations in which data gets updated or requested. Without any visualization indicating a running process, a user may perceive the application as being in an idle in such situations. Thus, to reflect the application’s loading state, a spinner element should be displayed during that period. 
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{recognize a loading state,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{see a loading indicator.}
+    \end{itemize}
+\end{itemize}
+
+
+
+\newpage
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Resource Count Infobox}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: \acrshort*{UX}}
+
+\noindent Unless there is an explicit large limit defined within the board configuration, it is likely the case the board shows only a subset from the entirety of all defined card classes. In this case, an infobox should inform users about the fact that not all resources are currently displayed. Otherwise, that is if the number of cards is less than the board limit, the infobox should inform about the current card count.
+
+
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{know how many cards are displayed on the board and whether they are limited,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{be notified about the amount of cards, and---if a subset is presented---the fact that there are more cards available.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Show Warnings}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: \tracknshrink{UX}}
+
+\noindent Users should receive warnings. For example, if a required component (e.g., the graph) is missing. If this is the case, an infobox should be provided to the user explaining the circumstances and providing guidance if possible. 
+
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{get informed about errors,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{see an infobox providing details on the subject.}
+    \end{itemize}
+\end{itemize}
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Highlight No Property Column}}}
+\centerline{\small Requirement Level: \tracknshrink{SHOULD} \quad{} Category: \acrshort*{UX}}
+
+\noindent In the case that a resource does not contain the requested column property, it is grouped into the \textit{no property} column (see \tracknshrink{FR}\textsubscript{8}). To highlight the unique role of this additional column, it should be more salient compared to the other regular columns. 
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{tell regular columns apart from the no property column,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{perceive a visual cue for these columns.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Real-Time Timestamp Update}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: \acrshort*{UX}}
+
+\noindent After a user drops a card to another column, the card should present a real-time indication of the modified timestamp. For example, the card should show: \textit{Modified: just now}.
+
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{perceive a card’s timestamp update status,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{get a visual feedback from the modified field after dropping the card.}
+    \end{itemize}
+\end{itemize}
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Real-Time Colored Cards}}}
+\centerline{\small Requirement Level: \tracknshrink{SHOULD} \quad{} Category: \acrshort*{UX}}
+
+\noindent When users work with many cards in a board, it is helpful to color-code cards that are moved throughout an active session (i.e., the time when a user works with the board without refreshing or closing the page). The color-coding should vanish after redrawing the board or refreshing the page.
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{know what cards I just moved,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{see the cards appear in a different color.}
+    \end{itemize}
+\end{itemize}
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Trim Long Text}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: \acrshort*{UX}}
+
+\noindent Text elements can reach a length where they break the \acrshort*{UI}. For example, depicting a very long \acrshort*{URI} would create unnecessary visual noise on a card. Therefore, all text elements should have reasonable boundaries and should be trimmed off if they exceed that limit.
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{avoid visual noise by long text elements,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{see text being truncated.}
+    \end{itemize}
+\end{itemize}
+
+
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Relative Time}}}
+\centerline{\small Requirement Level: \tracknshrink{SHOULD} \quad{} Category: \acrshort*{UX}}
+
+\noindent Humans are faster in perceiving a relative time designation (e.g., 2h ago) compared to an absolute one (e.g., at 14:03), especially when dealing with different time zones. Therefore, cards should depict relative times for the modification timestamp, as illustrated by the mockups in use case 1, 3, and 4.
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{quickly perceive modification dates,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{see a relative time depicted for the modification timestamps.}
+    \end{itemize}
+\end{itemize}
+
+
+\stepcounter{fr}\centerline{\textbf{FR\textsubscript{\arabic{fr}} --- \textsc{Tooltips}}}
+\centerline{\small Requirement Level: \tracknshrink{MUST} \quad{} Category: \acrshort*{UX}}
+
+\noindent When hovering over truncated text elements, a tooltip should reveal the full information for that particular object. Similar, when hovering over a relative time, a detailed absolute timestamp should appear.
+
+\begin{itemize}[after=\vspace{1em}]
+    \setlength\itemsep{-0.5em}
+	\item[] User Story\\[-7.8mm]
+	\begin{itemize}
+    \setlength\itemsep{-0.5em}
+        \item[] In order to \textit{get the full information about an element,}
+        \item[] as a \textit{user,}
+        \item[] I want to \textit{see a tooltip when hover over truncated elements.}
+    \end{itemize}
+\end{itemize}
+
+

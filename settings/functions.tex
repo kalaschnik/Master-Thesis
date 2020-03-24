@@ -1,0 +1,161 @@
+\usepackage{scrhack}
+
+\usepackage[hyphens]{url}
+
+\usepackage{censor} % allows to \censor{certain} text
+
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor} % https://en.wikibooks.org/wiki/LaTeX/Colors
+
+\usepackage[most]{tcolorbox}
+% create color boxes around text 
+% https://tex.stackexchange.com/questions/327323/how-to-change-options-in-the-fcolorbox-environment
+
+\usepackage[absolute,overlay]{textpos} % allows to free position text, as such:
+% \begin{textblock*}{5cm}(10cm,6cm) % {block width} (coords) 
+%   Your text here
+% \end{textblock*}
+
+\usepackage{float}		% enables H for tab/figs: \begin{table}[H]
+% if you don't have a blank line after \end{xxx}[H] there will be no indentation:
+\makeatletter
+
+\renewcommand\float@endH{\@endfloatbox\vskip\intextsep
+  \if@flstyle\setbox\@currbox\float@makebox\columnwidth\fi
+  \box\@currbox\vskip\intextsep\relax\@doendpe}
+
+\makeatother
+
+
+\usepackage{tikz} % advanced grpahics such as figure numbering etc.
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+		\node[shape=circle,draw,inner sep=1.75pt] (char) {#1};}} % make circled numbers with \circled{1} etc
+\usetikzlibrary{shadows.blur}
+
+
+
+\usepackage{relsize} % wird für \textscale verwendet
+\newcommand*{\tracknshrink}[1]{\textscale{0.9}{\textls*[25]{#1}}} % \tracknshrink{UNO}: verkleinert und sperrt Versalabkürzungen
+\newcommand*{\tns}[1]{\textscale{0.9}{\textls*[25]{#1}}} % \tracknshrink{UNO}: verkleinert und sperrt Versalabkürzungen
+
+
+\usepackage{enumitem}	% allows you to change the left margin on e.g. \begin{enumerate}[leftmargin=2cm]
+% override single enviroments with: \begin{itemize}[label={-}]
+\renewcommand{\labelitemii}{\raisebox{0.37mm}{\scalebox{.5}{$\blacksquare$}}}
+\renewcommand{\labelitemiii}{\raisebox{0.37mm}{\scalebox{.5}{$\blacksquare$}}}
+
+\usepackage{caption}				% fixt den scrollbug bei ref-Links für captions (fig & tables)
+
+\usepackage{graphicx}			% benötigt für Grafiken
+\graphicspath{{./img/}}			% global graphics path
+
+\usepackage{booktabs}			% See myriad of alternatives: http://tex.stackexchange.com/questions/12672/which-tabular-packages-do-which-tasks-and-which-packages-conflict
+% usage: http://www.namsu.de/Extra/pakete/Booktabs.html
+\usepackage{multirow} % use multirow for tables
+\newcommand*\rot{\rotatebox{90}} % use \rot to rotate text 90° for tables e.g.
+
+\usepackage{csquotes}			% glossaries needs this
+
+
+\usepackage{xargs}                      % Use more than one optional parameter in a new commands
+\usepackage[colorinlistoftodos,prependcaption,bordercolor=yellow!75,backgroundcolor=yellow!40,linecolor=yellow!75,textsize=scriptsize,textwidth=1.95cm]{todonotes}
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=Turquoise!30,backgroundcolor=Turquoise!20,bordercolor=Turquoise!30,#1]{#2}}
+\newcommandx{\wording}[2][1=]{\todo[linecolor=blue!30,backgroundcolor=blue!20,bordercolor=blue!30,#1]{#2}}
+\newcommandx{\info}[2][1=]{\todo[linecolor=Goldenrod!30,backgroundcolor=Goldenrod!20,bordercolor=Goldenrod!30,#1]{#2}}
+\newcommandx{\citethis}[2][1=]{\todo[linecolor=BrickRed!30,backgroundcolor=BrickRed!20,bordercolor=BrickRed!30,#1]{#2}}
+\newcounter{userstoryc}
+\newcommand*\lect{%
+   \stepcounter{lecture}%
+   \marginpar{\fbox{Lecture \thelecture}}}
+\newcommand{\userstory}[1]{%
+   \stepcounter{userstoryc}%
+   \paragraph{Story \#\theuserstoryc}%
+   \emph{Priority:} #1\\}
+   
+   
+   
+\usepackage{lettrine} % fro drop caps
+
+\usepackage{tabto}
+% The quick \tabto{3.5cm}brown \tabto{5.5cm}fox
+
+
+% define below/above reference using \here{keyword} \where{keyword}
+\makeatletter
+\newcount\here@undef
+\newcommand{\here}[1]{%
+  \@ifundefined{here@#1@undef}{}{\advance\here@undef by -1}%
+  \@namedef{here@#1}{}}
+\newcommand{\where}[1]{%
+  \@ifundefined{here@#1}{%
+    below%
+    \@ifundefined{here@#1@undef}{%
+      \@namedef{here@#1@undef}{}%
+      \advance\here@undef by 1
+    }{}%
+  }{%
+    above%
+  }%
+}
+\AtEndDocument{%
+  \ifnum\here@undef>0
+    \GenericWarning{}{There were undefined above/below labels}%
+  \fi}
+\makeatother
+
+
+
+
+\usepackage[edges]{forest} % for any kind of trees or directory listings
+\definecolor{folderbg}{RGB}{0,0,0}
+\definecolor{folderborder}{RGB}{128,128,128}
+\newlength\Size
+\setlength\Size{4pt}
+\tikzset{%
+  folder/.pic={%
+    \filldraw [draw=folderborder, top color=folderbg!50, bottom color=folderbg] (-1.05*\Size,0.2\Size+5pt) rectangle ++(.75*\Size,-0.2\Size-5pt);
+    \filldraw [draw=folderborder, top color=folderbg!50, bottom color=folderbg] (-1.15*\Size,-\Size) rectangle (1.15*\Size,\Size);
+  },
+  file/.pic={%
+    \filldraw [draw=folderborder, top color=folderbg!5, bottom color=folderbg!10] (-\Size,.4*\Size+5pt) coordinate (a) |- (\Size,-1.2*\Size) coordinate (b) -- ++(0,1.6*\Size) coordinate (c) -- ++(-5pt,5pt) coordinate (d) -- cycle (d) |- (c) ;
+  },
+}
+\forestset{%
+  declare autowrapped toks={pic me}{},
+  pic dir tree/.style={%
+    for tree={%
+      folder,
+      font=\sffamily,
+      grow'=0,
+    },
+    before typesetting nodes={%
+      for tree={%
+        edge label+/.option={pic me},
+      },
+    },
+  },
+  pic me set/.code n args=2{%
+    \forestset{%
+      #1/.style={%
+        inner xsep=2\Size,
+        pic me={pic {#2}},
+      }
+    }
+  },
+  pic me set={directory}{folder},
+  pic me set={file}{file},
+}
+
+
+
+
+
+
+% define a counter
+% fr = functional requirements
+\newcounter{fr}
+% nfr = non-functional requirements
+\newcounter{nfr}
+
+% setspace for toc spacing
+% https://latex.org/forum/viewtopic.php?t=4628
+\usepackage{setspace}

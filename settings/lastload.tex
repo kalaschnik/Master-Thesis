@@ -1,0 +1,42 @@
+\PassOptionsToPackage{hyphens}{url}
+\usepackage{hyperref}	% SOLLTE ALS LETZTES GELADEN WERDEN!
+
+% Printversion:		colorlinks=false und linktoc=all
+% Digitalversion:	colorlinks=true	 und linktoc=page	
+
+\hypersetup{
+%	bookmarks=false,         % show bookmarks bar?
+	unicode=true,          % non-Latin characters in Acrobat’s bookmarks
+	% pdftoolbar=false,        % show Acrobat’s toolbar?
+	% pdfmenubar=false,        % show Acrobat’s menu?
+	% pdffitwindow=false,     % window fit to page when opened
+	% pdfstartview={FitH},    % fits the width of the page to the window
+	pdftitle={Visualizing \& Manipulating RDF Graphs within the Kanban Paradigm: A Prototypical Implementation of an RDF Kanban Board},    % title
+	pdfauthor={Steven Kalinke},     % author
+	pdfsubject={Master’s Thesis},   % subject of the document
+	pdfcreator={Steven Kalinke},   % creator of the document
+	pdfproducer={Steven Kalinke}, % producer of the document
+	pdfkeywords={Kanban Board, React, Semantic Web, SPARQL, RDF(S), OWL, SHACL}, % list of keywords
+	pdfnewwindow=true,      % links in new PDF window
+	colorlinks=true,       % false: boxed links; true: colored links
+	pdfborder={0 0 0},		% color of the border around links
+	linkbordercolor={0 0 0},
+	citebordercolor={0 0 0},
+	urlbordercolor={0 0 0},
+	linktoc=page,				% defines which part of an entry in the table of contents is made into a link (none,section,page,all)
+	linkcolor=MidnightBlue,          % color of internal links (change box color with linkbordercolor)
+	citecolor=MidnightBlue,        % color of links to bibliography
+	filecolor=MidnightBlue,      % color of file links
+	urlcolor=MidnightBlue           % color of external links
+}
+
+% Nach Hyperref – Glossaries
+\usepackage[
+    nomain,
+    acronym,
+    toc, % LoA in TOC?
+    indexonlyfirst
+]{glossaries} % Optional: nopostdot https://de.sharelatex.com/learn/Glossaries
+\makeglossaries	% https://en.wikibooks.org/wiki/LaTeX/Glossary
+% \usepackage{cleveref}% Has to be loaded after hyperref
+

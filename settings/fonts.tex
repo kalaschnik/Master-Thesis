@@ -1,0 +1,43 @@
+\usepackage{pifont}					% Symbole nutzen z. B. Aldusblatt mit \ding{167}
+\usepackage{fontawesome}            % Font Awesome Icons nutzen
+
+% http://ftp.fau.de/ctan/fonts/ccicons/ccicons.pdf
+% \ccShareAlike
+\usepackage[scale=0.9]{ccicons}
+
+
+\usepackage{eurosym}				% sauberes Eurosymbol, siehe: http://www.theiling.de/eurosym.html
+
+
+\usepackage[oldstyle]{libertine} % set typewriter a bit smaller to get a nicer typewriter size, oldstyle set OsF for all numbers
+% use the two commands for Th and Qu ligatures. Leave Libtertine under all circumstances at T1
+% be aware you will not be able to find the word Query if you use these ligatures... etc.
+\newcommand{\Th}{\begingroup\fontencoding{OT1}\selectfont Th\endgroup}
+\newcommand{\Qu}{\begingroup\fontencoding{OT1}\selectfont Qu\endgroup}
+
+\usepackage{CJKutf8} % Chinese-Japanese-Korean 
+% use with: \begin{CJK}{UTF8}{min}未練なく散も桜はさくら哉\end{CJK}
+
+\usepackage{libertinust1math}
+
+\usepackage[scaled=.92]{helvet}	% Helvetica-Font for headings
+
+\usepackage[scaled=0.83]{beramono}
+
+% change single levels to appear differently:
+\setkomafont{subparagraph}{\normalfont\textit}
+% \setkomafont{subparagraph}{\normalfont\textbf}
+% \RedeclareSectionCommand[indent=0pt]{subparagraph}
+% \RedeclareSectionCommands[
+%     beforeskip=-3.25ex plus -1ex minus -0.2ex,
+%     runin=false,
+%     afterskip=-\parskip
+% ]{paragraph,subparagraph}
+
+% this makes ligatures searchable in the pdf file
+\input{glyphtounicode}
+\pdfglyphtounicode{f_f}{FB00}
+\pdfglyphtounicode{f_f_i}{FB03}
+\pdfglyphtounicode{f_f_l}{FB04}
+\pdfglyphtounicode{f_i}{FB01}
+\pdfgentounicode=1

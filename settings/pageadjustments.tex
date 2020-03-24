@@ -1,0 +1,14 @@
+\usepackage[onehalfspacing]{setspace}	% sauber 1,5 Zeilendurchschuss
+\RedeclareSectionCommand[beforeskip=0pt,afterskip=2em]{chapter} % Platz vor und nach Chapter definieren
+
+
+\usepackage[left=3cm, right=2.5cm, top=2.5cm, bottom=2cm]{geometry}
+\clubpenalty = 10000 % Schusterjungen/Waisenkinder/Orpahns
+\widowpenalty = 10000 % Hurenkinder / Widows
+\displaywidowpenalty = 10000 %  Hurenkinder vor einer abgesetzten mathematischen Formel
+
+
+
+\setparsizes{1em}{0em}{1em plus 1fil} % 0.75em = parskip=half in komascript
+%The first value is parindent, the second parskip, the third parfilskip. "half" uses 0.5 in the second argument.
+%if you want no indentation at all add parskip=half to the koma document class and comment setparsizes out

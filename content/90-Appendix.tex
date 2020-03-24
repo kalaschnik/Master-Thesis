@@ -1,0 +1,253 @@
+\addchap{Appendix}
+
+\section*{Board Configuration}
+
+\begin{spacing}{0.9}
+    \lstset{language=N3,escapechar=|,numbers=none}
+    \begin{lstlisting}[
+    label={lst:BoardConfigComplete},
+    xleftmargin=0em, % this needs to be manually adjusted to center the frame
+    xrightmargin=-0em, % this needs to be manually adjusted to center the frame
+    caption={[Board Configuration]Board Configuration.}]
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix dct:  <http://purl.org/dc/terms/> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix rmb:  <https://vocab.eccenca.com/rmb/> .
+@prefix dcat: <http://www.w3.org/ns/dcat#> .
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix shui: <https://vocab.eccenca.com/shui/> .
+@prefix dbug: <http://ontologi.es/doap-bugs#> .
+
+<http://www.w3.org/ns/shacl#IRI> a <http://www.w3.org/ns/shacl#NodeKind> .
+<http://www.w3.org/ns/shacl#Literal> a <http://www.w3.org/ns/shacl#NodeKind> .
+rdfs:comment a owl:DatatypeProperty .
+skos:Concept a owl:Class .
+
+
+# RMB Class Definition
+
+rmb:
+  a owl:Ontology ;
+  rdfs:comment "This includes shapes, classes, properties and configurations for the RMB." ;
+  rdfs:label "RMB Configuration" ;
+  rdfs:seeAlso
+    <https://confluence.brox.de/display/ECCPRODMGMT/Resource+Management+Board>,
+    <https://gitlab.eccenca.com/elds-ui/ecc-component-resourcemanagementboard> ;
+  dct:creator
+    <https://ns.eccenca.com/steven.kalinke> ,
+    <https://ns.eccenca.com/stramp> .
+
+<https://vocab.eccenca.com/rmb/BoardConfig>
+  a owl:Class ;
+  rdfs:label "Board Configuration" .
+  
+ 
+# General Board Properties 
+
+rmb:cardsGraph
+  a owl:ObjectProperty ;
+  rdfs:comment "single relation pointing to the named graph where the cards are loaded from" ;
+  rdfs:label "cards graph" ;
+  rdfs:domain rmb:BoardConfig .
+
+rmb:boardLimit
+  a owl:DatatypeProperty ;
+  rdfs:comment "single integer value used to set the limit of shown cards on a board" ;
+  rdfs:label "board limit" ;
+  rdfs:domain rmb:BoardConfig .
+
+
+# Board Component Resources
+
+rmb:cardsClass
+  a owl:ObjectProperty ;
+  rdfs:comment
+    "possible multiple relations pointing to the classes defining the cards on the board" ;
+  rdfs:label "cards class" ;
+  rdfs:domain rmb:BoardConfig .
+
+
+
+
+rmb:cardsColumnsProperty
+  a owl:ObjectProperty ;
+  rdfs:comment "single relation pointing to the property which is used to arrange the cards in columns" ;
+  rdfs:label "column property" ;
+  rdfs:domain rmb:BoardConfig .
+
+rmb:cardsLaneProperty
+  a owl:ObjectProperty ;
+  rdfs:comment "single relation pointing to the property which is used to arrange the cards in lanes" ;
+  rdfs:label "lane property" ;
+  rdfs:domain rmb:BoardConfig .
+  
+  
+# Card Component Resources
+
+rmb:cardsDescriptionProperty
+  a owl:ObjectProperty ;
+  rdfs:comment "single relation pointing to the property which is used for the body of the cards" ;
+  rdfs:label "description property" ;
+  rdfs:domain rmb:BoardConfig .
+
+rmb:cardsModifiedProperty
+  a owl:ObjectProperty ;
+  rdfs:comment
+    "single relation pointing to the property which is used to save the xsd:dateTime modified timestamp" ;
+  rdfs:label "modified property" ;
+  rdfs:domain rmb:BoardConfig .
+
+rmb:cardsAdditionalFieldProperty
+  a owl:DatatypeProperty, owl:ObjectProperty ;
+  rdfs:comment
+    "multiple relation pointing to the properties which are used to show additional fields on cards" ;
+  rdfs:label "additional field property" ;
+  rdfs:domain rmb:BoardConfig .
+
+
+# SHACL SHAPES
+
+rmb:boardConfigSHACL
+  a <http://www.w3.org/ns/shacl#NodeShape> ;
+  sh:name "Board Configuration" ;
+  sh:property rmb:labelSHACL,
+              rmb:descriptionSHACL,
+              rmb:cardsGraphSHACL,
+              rmb:boardLimitSHACL,
+              rmb:cardsClassesSHACL,
+              rmb:cardsColumnPropertySHACL,
+              rmb:cardsLanePropertySHACL,
+              rmb:cardsDescriptionPropertySHACL,
+              rmb:cardsAdditionalFieldPropertySHACL,
+              rmb:cardsModifiedPropertySHACL ;
+  sh:targetClass rmb:BoardConfig ;
+  shui:tabName "Board Configuration" ;
+  rdfs:label "Board Configuration" .
+
+rmb:labelSHACL
+  a sh:PropertyShape ;
+  sh:name "Name" ;
+  sh:description "the name of the board" ;
+  sh:maxCount 1 ;
+  sh:nodeKind sh:Literal ;
+  sh:order 1 ;
+  sh:path rdfs:label ;
+  shui:showAlways true ;
+  sh:minCount 1 ;
+  rdfs:label "Name" .
+
+
+
+
+
+
+rmb:descriptionSHACL
+  a sh:PropertyShape ;
+  sh:name "Description" ;
+  sh:description "descriptive text on the intention of the board" ;
+  sh:maxCount 1 ;
+  sh:nodeKind sh:Literal ;
+  sh:order 2 ;
+  sh:path dct:description ;
+  shui:showAlways true ;
+  sh:minCount 0 ;
+  rdfs:label "Description" .
+
+rmb:cardsGraphSHACL
+  a sh:PropertyShape ;
+  sh:name "Graph" ;
+  sh:class owl:Ontology ;
+  sh:description "The Knowledge Graph which is used to get the cards from." ;
+  sh:maxCount 1 ;
+  sh:nodeKind sh:IRI ;
+  sh:order 3 ;
+  sh:path rmb:cardsGraph ;
+  shui:denyNewResources true ;
+  sh:minCount 1 ;
+  rdfs:label "Graph" .
+
+rmb:boardLimitSHACL
+  a sh:PropertyShape ;
+  sh:name "board limit" ;
+  sh:description "single integer value used to set the limit of shown cards on a board" ;
+  sh:maxCount 1 ;
+  sh:nodeKind sh:Literal ;
+  sh:path rmb:boardLimit ;
+  sh:datatype xsd:integer ;
+  rdfs:label "board limit" .
+
+rmb:cardsClassesSHACL
+  a sh:PropertyShape ;
+  sh:name "Class(es)" ;
+  sh:class owl:Class ;
+  sh:description "which cards should be shown in the board" ;
+  sh:nodeKind sh:IRI ;
+  sh:order 4 ;
+  sh:path rmb:cardsClass ;
+  sh:minCount 1 ;
+  rdfs:label "Classes" .
+
+rmb:cardsColumnPropertySHACL
+  a sh:PropertyShape ;
+  sh:name "Column Property" ;
+  sh:description "property used to arrange the cards in columns" ;
+  sh:maxCount 1 ;
+  sh:nodeKind sh:IRI ;
+  sh:order 5 ;
+  sh:path rmb:cardsColumnsProperty ;
+  sh:minCount 1 ;
+  shui:uiQuery rmb:843c129c-6d65-4f23-886f-1a1a049c12b9 ;
+  rdfs:label "Column Property" .
+
+rmb:cardsLanePropertySHACL
+  a sh:PropertyShape ;
+  sh:name "Lane Property" ;
+  sh:description "the property used to arrange the cards in lanes" ;
+  sh:maxCount 1 ;
+  sh:nodeKind sh:IRI ;
+  sh:order 6 ;
+  sh:path rmb:cardsLaneProperty ;
+  shui:showAlways true ;
+  shui:uiQuery rmb:843c129c-6d65-4f23-886f-1a1a049c12b9 ;
+  rdfs:label "Lane Property" .
+
+
+
+rmb:cardsDescriptionPropertySHACL
+  a sh:PropertyShape ;
+  sh:name "Description Property" ;
+  sh:class owl:DatatypeProperty ;
+  sh:description "the property which is used to fill the card body (defaults to dct:description)" ;
+  sh:maxCount 1 ;
+  sh:nodeKind sh:IRI ;
+  sh:path rmb:cardsDescriptionProperty ;
+  rdfs:label "Description Property" .
+
+rmb:cardsAdditionalFieldPropertySHACL
+  a sh:PropertyShape ;
+  sh:name "Additional Properties" ;
+  sh:description "Relation pointing to the properties which are used to show additional fields on the cards" ;
+  sh:nodeKind sh:IRI ;
+  sh:path rmb:cardsAdditionalFieldProperty ;
+  shui:showAlways false ;
+  shui:uiQuery rmb:843c129c-6d65-4f23-886f-1a1a049c12b9 ;
+  rdfs:label "Additional Properties" .
+
+rmb:cardsModifiedPropertySHACL
+  a sh:PropertyShape ;
+  sh:name "Modified Property" ;
+  sh:class owl:DatatypeProperty ;
+  sh:description "the property which is used to save modified timestamps (defaults to dct:modified)" ;
+  sh:nodeKind sh:IRI ;
+  sh:path rmb:cardsModifiedProperty ;
+  rdfs:label "Modified Property" .
+\end{lstlisting}
+\end{spacing}
+
+
+
+

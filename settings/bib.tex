@@ -1,0 +1,113 @@
+\usepackage[style=authoryear,dashed=false,uniquelist=false,maxbibnames=7,maxcitenames=2,autocite=inline,block=space,backref=true,backrefstyle=three+,date=short, uniquename=init,giveninits]{biblatex}
+\setlength{\bibitemsep}{1em}	% Abstand zwischen den Literaturangaben
+\setlength{\bibhang}{\parindent}% Einzug nach jeweils erster Zeile
+
+\DefineBibliographyStrings{german}{% change the text of urldate in @online biblattex entries
+	urlseen = {Zugriff am},
+}
+
+% both lines will break long urls in references
+\setcounter{biburllcpenalty}{7000}
+\setcounter{biburlucpenalty}{8000}
+
+% declare date fields that should be used to determine the date information behind citations (Note this also helps to avoid the usage of urldate when there is no year given, but still you want to show the access date)
+\DeclareLabeldate{
+  \field{year}
+  \field{date}
+  \field{eventdate} 
+  \field{origdate}
+  \literal{nodate}
+}
+
+% This changes that urldate is set in () to not being in () but ends with a comma instead (nicer)
+\DeclareFieldFormat{urldate}{\addcomma\space\bibstring{urlseen}\space#1}
+
+% all this changed the the no date to what ever you want
+%\DefineBibliographyStrings{german}{%
+%	nodate = {{}o\adddot\addnbthinspace J\adddot} % <- edit this line
+%}
+
+\DeclareNameAlias{sortname}{family-given}	% avoids this: Staples, M. L. & J. M. Bieman (1999)
+%\DeclareFieldFormat{postnote}{#1}		% macht das Seitenzahlkürzel weg (S.)
+%\DeclareFieldFormat{multipostnote}{#1} 	% macht das Seitenzahlkürzel weg (S.)
+
+
+%\makeatletter % Macht aus runden Klammern eckige bei Intext-Referenzen.
+%\newrobustcmd*{\parentexttrack}[1]{%
+%	\begingroup
+%	\blx@blxinit
+%	\blx@setsfcodes
+%	\blx@bibopenparen#1\blx@bibcloseparen
+%	\endgroup}
+%
+%\AtEveryCite{%
+%	\let\parentext=\parentexttrack%
+%	\let\bibopenparen=\bibopenbracket%
+%	\let\bibcloseparen=\bibclosebracket}
+%\makeatother
+
+\renewcommand*{\nameyeardelim}{\addcomma\space}	% adds a comma after author
+
+\DefineBibliographyStrings{ngerman}{andothers = {{et\,al\adddot}},} % macht aus u.a. et al.
+\DefineBibliographyStrings{ngerman}{and={\&}} % und zu & machen
+\DefineBibliographyStrings{english}{andothers = {{et\,al\adddot}},} % macht aus u.a. et al.
+\DefineBibliographyStrings{english}{and={\&}} % und zu & machen
+%\renewcommand{\multinamedelim}[0]{/} % ersetzt und zu /
+%\renewcommand{\finalnamedelim}[0]{/} % ersetzt und zu /
+\bibliography{./MA}
+
+
+% this enables hyperref for cite and textcite
+\DeclareFieldFormat{citehyperref}{%
+	\DeclareFieldAlias{bibhyperref}{noformat}% Avoid nested links
+	\bibhyperref{#1}}
+
+\DeclareFieldFormat{textcitehyperref}{%
+	\DeclareFieldAlias{bibhyperref}{noformat}% Avoid nested links
+	\bibhyperref{%
+		#1%
+		\ifbool{cbx:parens}
+		{\bibcloseparen\global\boolfalse{cbx:parens}}
+		{}}}
+
+\savebibmacro{cite}
+\savebibmacro{textcite}
+
+\renewbibmacro*{cite}{%
+	\printtext[citehyperref]{%
+		\restorebibmacro{cite}%
+		\usebibmacro{cite}}}
+
+\renewbibmacro*{textcite}{%
+	\ifboolexpr{
+		( not test {\iffieldundef{prenote}} and
+		test {\ifnumequal{\value{citecount}}{1}} )
+		or
+		( not test {\iffieldundef{postnote}} and
+		test {\ifnumequal{\value{citecount}}{\value{citetotal}}} )
+	}
+	{\DeclareFieldAlias{textcitehyperref}{noformat}}
+	{}%
+	\printtext[textcitehyperref]{%
+		\restorebibmacro{textcite}%
+		\usebibmacro{textcite}}}
+
+
+% This enables hyperref for \citeyear
+\DeclareCiteCommand{\citeyear}
+{}
+{\bibhyperref{\printdate}}
+{\multicitedelim}
+{}
+
+% This enables hyperref for \citeauthor
+\DeclareCiteCommand{\citeauthor}
+{\boolfalse{citetracker}%
+	\boolfalse{pagetracker}%
+	\usebibmacro{prenote}}
+{\ifciteindex
+	{\indexnames{labelname}}
+	{}%
+	\printtext[bibhyperref]{\printnames{labelname}}}
+{\multicitedelim}
+{\usebibmacro{postnote}}

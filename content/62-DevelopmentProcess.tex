@@ -1,0 +1,142 @@
+\section{Development Process}\label{sec:DevProcess}
+
+The agile development process of the current project was held in an iterative and incremental manner. The development of the prototype was split into small and manageable pieces, undergoing multiple iteration cycles. In irregular meetings, novel features or enhancements were discussed and specified. In the step-wise development process, novel features were first tested and implemented before the next iteration cycle. The cycles were repeated until a satisfying prototypical application state was reached for this work.
+
+Besides learning the involved technologies, one of the most time-consuming tasks of the current project was the data transformation process. That is the conversion from the response object of the board’s data (\autoref{lst:JSONGetBoardsData}) to the target data model (\autoref{lst:react-trello-multipleLanesJSON}). The next subsection gives an outline of the main obstacles in this regard and illustrates the algorithm used to transform the data from the response object to the target data model.
+
+
+\subsection{Towards the Target Data Model}\label{ssec:DataTransformation}
+
+Comparing the column and lane resources in \autoref{lst:JSONGetBoardsData} (e.g., lines 3 and 4) reveals that both differ in their type: while columns are of type \texttt{literal}, lanes are of type \texttt{uri}. This implies that both require different processing steps. The target data model, for example, requires one title for each swimlane. This means that a single title will be used to label every individual segment of the swimlane container, as specified in \autoref{fig:BoardTemplateMDL}. However, given that swimlanes are resources—in this particular case—their label needs to be first resolved using eccenca’s titleHelper. Moreover, if a certain resource does not contain a swimlane property while other resources do, even more processing steps are required.
+
+To summarize this ‘mixed-type issue,’ \autoref{tab:LiteralURICaseOverview} provides a lookup table for all possible combinations. The corresponding function\footnote{That is the function within the file \texttt{getInitialBoardState.js} located at \texttt{src/util/} attached digitally to this work.} contains the transformation algorithm, and also refers to the notation depicted in the table. Ultimately, this function is responsible for converting the response object of stage {\small \hyperref[ssec:QS-C]{\(\mathcal{C}\)}} into the target data model. The \libertineLF3×3\libertineOsF{} matrix only differentiates between column and lane types, since these are the only board component resources that can vary in their type.\footnote{Cards are always resources (that means they are always of type \texttt{uri}); therefore, they are not considered in this matrix.} In the table, the type null expresses the scenario that a resource does not contain the requested swimlane and/or column property. The boxes around the entries illustrate how the algorithm branches the processing. 
+
+
+\begin{table}[H]
+        \centering
+        \begin{tabular}{cl|ccc}
+        \multicolumn{2}{c}{} % remove vertical lines in this cell
+                & \multicolumn{3}{c}{\textbf{Column Type}}  \\
+        \multicolumn{2}{c}{} % remove vertical lines in this cell
+                &   \textsc{Literal}   &   \textsc{Uri}   &   \textcolor{gray}{\textsc{Null} (×)} \\ 
+            \cmidrule(l){3-5}
+            \multirow{3}{*}{\rotatebox[origin=c]{90}{\textbf{Lane Type}}}
+            & \textsc{Literal} & \tracknshrink{LL} & \tracknshrink{LU} & \textcolor{gray}{\tracknshrink{L}×} \\
+            & \textsc{Uri} & \framebox[1.3\width]{\tracknshrink{UL}} & \tracknshrink{UU} & \textcolor{gray}{\framebox[1.3\width]{\tracknshrink{U}×}} \\
+            & \textcolor{gray}{\textsc{Null} (×)} &  \textcolor{gray}{\framebox[1.3\width]{×\tracknshrink{L}}} & \textcolor{gray}{×\tracknshrink{U}} & \textcolor{gray}{\framebox[1.3\width]{\textcolor{gray}{××}}} \\
+        \end{tabular}
+        \caption[Mixed Type Processing Lookup Table]{Lookup table for the mixed type processing algorithm. The boxes around the matrix entries illustrate explicit (black) and implicit cases (gray) and corresponding processing steps for a single resource, based on the response object provided in \autoref{lst:JSONGetBoardsData}.}
+        \label{tab:LiteralURICaseOverview}
+        \end{table}
+
+\newpage
+
+\noindent To provide an example of how to read the lookup table, reconsider the lane and column types of \autoref{lst:JSONGetBoardsData} (i.e., \texttt{uri} and \texttt{literal}, resp.). The corresponding matrix entry in \autoref{tab:LiteralURICaseOverview} explicitly yields to \tracknshrink{UL}. However, if a resource does not contain the requested column or swimlane property, both entries at the horizontal and vertical margin of the table need to be considered implicitly. For the first use case this means, that if a \acrshort*{FOAF} term has no \texttt{term\_status} property, it would be allocated in the \textit{no property} column, meaning that it would be processed using the steps of \tracknshrink{U}×. Similarly, if a \acrshort*{FOAF} term has no type property defined, it would be allocated in the \textit{Everything Else} swimlane, meaning that it would be processed by the ×\tracknshrink{L} condition. Furthermore, and regardless of the explicit case, if a resource lacks the requested column and lane property, the processing steps of ×× would be applied. That would, for example, be the case if a card is located in the \textit{no property} column within the \textit{Everything Else} swimlane.
+
+In conclusion, the algorithm determines the correct processing step by selecting the explicit matrix entry and selecting the corresponding horizontal and vertical margin entries. Lastly, the case ×× should always be checked and, if applicable, executed. To give one final example for this case: If a single resource contains the properties corresponding to the explicit entry \tracknshrink{LU}, then the following implicit cases are also possible in this particular board: \tracknshrink{L}×, ×\tracknshrink{U}, and ××.
+
+Due to the complex structure of the branching process, various response objects have been used to test the reliability of the transformation process.\footnote{See the files \texttt{ll.js}, \texttt{lu.js}, \texttt{ul.js}, and \texttt{uu.js} located at \texttt{src/util/demos/}.}
+
+
+
+
+\subsection{Project and Component Structure}\label{ssec:ComponentStructure}
+
+This subsection provides an overview and brief description of the project structure. For the sake of clarity, some utility files were not included in this list. However, all files are accessible in eccenca’s repository or on the attached microSD card.
+
+\vspace*{1.0em}
+
+
+\noindent {\footnotesize
+\begin{forest}
+  pic dir tree,
+  where level=0{}{% folder icons by default; override using file for file icons
+    directory,
+  },
+  [src
+    [components \hspace*{114pt} \textcolor{darkgray}{\textrm{Grouping all React components}}
+      [Lane
+        [CustomCard
+          [CustomCard.jsx \hspace*{63pt} \textcolor{darkgray}{\textrm{Custom card specs. (see \autoref{fig:CardTemplateMDL}), text trimmings, apply \tracknshrink{MDL} styles}}, file]
+        ]
+        [Lane.jsx \hspace*{104pt} \textcolor{darkgray}{\textrm{Represents the lane container (see \autoref{fig:BoardTemplateMDL}), imports CustomCard}}, file]
+      ]
+      [SPARQLView
+        [SPARQLView.jsx \hspace*{73pt} \textcolor{darkgray}{\textrm{Provides a \acrshort*{UI} component to review/edit the Board’s query (see \tracknshrink{FR}\textsubscript{12/13})}}, file]
+      ]
+      [ShaclineModal
+        [ShaclineModal.jsx \hspace*{68pt} \textcolor{darkgray}{\textrm{Provides a modal dialog (i.e., eccenca’s \tracknshrink{SHACLINE}) on card click (see \tracknshrink{FR}\textsubscript{20})}}, file]
+      ]
+    ]
+    [util
+      [demos
+        [*.js \hspace*{123pt} \textcolor{darkgray}{\textrm{Test queries for mixed type cases (ll/lu/ul/uu.js, see \autoref{tab:LiteralURICaseOverview}, \tracknshrink{NFR}\textsubscript{3})}}, file]
+      ]
+      [sparql-mappings
+        [baseSPARQLStr.js \hspace*{65pt} \textcolor{darkgray}{\textrm{Template to query the board’s data, similar to \autoref{lst:SPARQLGetBoardsData}}}, file]
+        [generateBoardSPARQL.js \hspace*{39pt} \textcolor{darkgray}{\textrm{Replace former template placeholders with the requested resources (\autoref{lst:SPARQLGetBoardsDataDemo})}}, file]
+        [generateLookaheadBoardSPARQL.js \hspace*{-2pt} \textcolor{darkgray}{\textrm{Minified version of the former query; yet, with an implicit limit of +1}}, file]
+        [getAllBoards.js \hspace*{79.5pt} \textcolor{darkgray}{\textrm{Requesting all defined board configurations, similar to \autoref{lst:SPARQLFetchAllBoards}}}, file]
+        [getBoardObjects.js \hspace*{65pt} \textcolor{darkgray}{\textrm{Fetch all defined properties within the selected board, similar to \autoref{lst:SPARQLGetBoardProperties}}}, file]
+      ]
+      [JSONtemplate.js \hspace*{85pt} \textcolor{darkgray}{\textrm{JSON template for the target data model}}, file]
+      [boardDefaults.js \hspace*{87.5pt} \textcolor{darkgray}{\textrm{Define text elements (e.g.\textit{Everything Else} lane or \textit{no property} column)}}, file]
+      [deleteProperty.js \hspace*{85pt} \textcolor{darkgray}{\textrm{Function that gets triggered if the target column is the \textit{no property} column}}, file]
+      [deletePropertyStr.js \hspace*{74pt} \textcolor{darkgray}{\textrm{Template to delete a property, similar to \autoref{lst:SPARQLColumnDelete}}}, file]
+      [getBoardBody.js \hspace*{87pt} \textcolor{darkgray}{\textrm{Creates a meta object containing the board’s data and other information}}, file]
+      [getInitialBoardState.js \hspace*{66pt} \textcolor{darkgray}{\textrm{Transforms the former object to the target data model, see \autoref{ssec:DataTransformation}}}, file]
+      [handleColumnUpdates.js \hspace*{54pt} \textcolor{darkgray}{\textrm{Checks source and target columns, and triggers the update/deleteProperty.js}}, file]
+      [promises.js \hspace*{105pt} \textcolor{darkgray}{\textrm{Wraps eccenca’s sparql and titleHelperChannel in JavaScript’s promise \tracknshrink{API}}}, file]
+      [updateProperty.js \hspace*{83pt} \textcolor{darkgray}{\textrm{Function that gets triggered if the target column is a regular column}}, file]
+      [updatePropertyStr.js \hspace*{72pt} \textcolor{darkgray}{\textrm{Template to update a property, similar to \autoref{lst:SPARQLColumnUpdate}}}, file]
+      [updateTimestampStr.js \hspace*{62pt} \textcolor{darkgray}{\textrm{Template to create a modified property for a resource, similar to \autoref{lst:SPARQLTimestamp}}}, file]
+    ]
+    [ResourceManagementBoard.jsx \hspace*{41pt} \textcolor{darkgray}{\textrm{Main React Container}}, file]
+  ]
+\end{forest}
+}
+
+
+
+\newpage
+
+% % JavaScript Promise API for eccenca’s sparqlChannel and titleHelper
+% \begin{spacing}{0.9}
+%     \lstset{language=JavaScript}
+%     \begin{lstlisting}[
+%     label={lst:promise},
+%     xleftmargin=2.5em, % this needs to be manually adjusted to center the frame
+%     xrightmargin=-2.5em, % this needs to be manually adjusted to center the frame
+%     caption={[A — Response Object]Exemplary response object of the request in \autoref{lst:SPARQLFetchAllBoards}.}]
+% export function titleHelperPromise(titleHelperChannel, uris) {
+%   return new Promise(resolve => {
+%     titleHelperChannel
+%       .request({ topic: "get.titles", data: [...uris] })
+%       .subscribe(URIsTitlesLUT => resolve(URIsTitlesLUT));
+%   });
+% }
+
+% import titleHelperChannel from '@eccenca/store-titlehelper';
+% import { titleHelperPromise } from './util/promises';
+%             const titleHelperResponse = await titleHelperPromise(titleHelperChannel,
+%                 [...boardBody.laneURIs, ...boardBody.columnURIs, ...boardBody.cardURIs]);
+
+% \end{lstlisting}
+% \end{spacing}
+
+
+
+
+% Include these points?
+% More specifically, if the result set (i.e., the amount of all cards) is equal to the implicit or explicit limit, a second query should be requested with the implicit/explicit limit + 1
+
+% user should be informed that a cutoff the corresponding cutoff value was used to trim the result set. If that is the case, a 
+
+% In the case that the result set (i.e., the amount of all cards) is smaller then the limit
+
+
+
+
+
+
+

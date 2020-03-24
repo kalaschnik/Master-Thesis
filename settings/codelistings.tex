@@ -1,0 +1,78 @@
+% https://mysnippets443.wordpress.com/2015/11/28/latex-insert-javascript-code-with-lstlisting-package/
+\usepackage{listings}	% braucht scrhack bei Komaklassen!
+\usepackage{upquote} % renders single upquote ' correctly
+\usepackage{zref-base}	% wichtig hack mit Code listings
+\renewcommand\lstlistingname{Code}	% Change Listing into whatever
+\renewcommand\lstlistlistingname{List of Code} % Change Listing into whatever in toc
+
+
+
+\definecolor{colKeys}{rgb}{0,0,0.52} 
+\definecolor{colIdentifier}{rgb}{0,0,0} 
+\definecolor{colComments}{rgb}{0.52,0.52,0.52} 
+\definecolor{colString}{rgb}{0,0.5,0}
+\definecolor{colNumbers}{rgb}{0.5,0.5,0.5}
+\definecolor{colRed}{rgb}{1,0,0}
+\definecolor{colPurple}{rgb}{0.65, 0.12, 0.82}
+\definecolor{colGray}{rgb}{0.3, 0.3, 0.3}
+\definecolor{light-gray}{gray}{0.95}
+\definecolor{light-orange}{rgb}{.97,.73,.46}
+
+
+%define Javascript language
+\lstdefinelanguage{JavaScript}{
+	keywords={typeof, new, true, false, catch, function, return, null, catch, switch, var, const, let, if, in, while, do, else, case, break, object},
+	keywordstyle=\color{colKeys},
+	ndkeywords={class, export, boolean, throw, implements, import, this, render},
+	ndkeywordstyle=\color{colNumbers}\bfseries,
+	identifierstyle=\color{colIdentifier},
+	sensitive=false,
+	comment=[l]{//},
+	morecomment=[s]{/*}{*/},
+	commentstyle=\color{colGray}\ttfamily,
+	stringstyle=\color{colString}\ttfamily,
+	morestring=[b]',
+	morestring=[b]"
+}
+
+% N3 Logic (also usable for Turtle RDF serialization)
+\lstdefinelanguage{N3}%
+{morekeywords={@forAll,@forSome,@prefix,a,is,of},%
+morecomment=[l]{\#\ },%
+morestring=[b]",%
+morestring=[b]{"""}}[keywords,comments,strings]
+
+
+% Define SPARQL that is based on SQL since the share alot of keywords
+\lstdefinelanguage{SPARQL}{%
+  language     = SQL,
+  deletekeywords={VALUE},
+  morekeywords = {FILTER,OPTIONAL,SAMPLE,PREFIX,WITH,DATA,GRAPH},
+  ndkeywords = {boardIRI,additionalValues,cardsGraph,cardsClass,cardsColumnProperty,cardsLaneProperty,cardsDescriptionProperty,cardsModifiedProperty,additionalPropertiesPlaceholder,boardLimit,laneSample,cardsGraph,ISO8601Timestamp,cardId,newColumnValue},
+  ndkeywordstyle={\color{colRed}}
+}
+
+
+
+
+\lstset{
+	basicstyle=\footnotesize\ttfamily,
+	tabsize=2,
+	abovecaptionskip=0.9em, % space between listing and caption
+	aboveskip=.2em, % space between above text and listing
+	belowskip=2.3em, % space between caption and below text
+	captionpos=b,
+	identifierstyle=\color{colIdentifier},
+	keywordstyle=\color{colKeys},
+	stringstyle=\color{colString},
+	commentstyle=\color{colComments},
+	numbers=left,
+	numberstyle=\libertineLF\scriptsize\color{colNumbers},
+	xleftmargin=5em,
+	xrightmargin=-5em,
+	language=JavaScript,
+	morekeywords={x3d}, 
+	captionpos=b,
+	extendedchars=true,
+	showstringspaces=false
+}

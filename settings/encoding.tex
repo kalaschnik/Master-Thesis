@@ -1,0 +1,7 @@
+\usepackage[LGR,T1]{fontenc}	% extended character support (LGR is for greek input
+\usepackage[utf8]{inputenc}		% forces UTF8
+\usepackage[ngerman, english]{babel}		% main language is the last in the list, more infor is here: https://en.wikibooks.org/wiki/LaTeX/Internationalization#Babel
+
+% needs LGR in fontenc (LGR is for greek input, used with: \textgreek{φύσις}
+% use with: \textgreek{φύσις}
+\newcommand{\textgreek}[1]{\begingroup\fontencoding{LGR}\selectfont#1\endgroup}

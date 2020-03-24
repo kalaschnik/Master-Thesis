@@ -1,0 +1,156 @@
+\documentclass[
+    11pt, % overall font size
+    listof=totoc % put list of XYZ in toc?
+]{scrreprt}
+
+% ███▓▒░░.___INPUT ALL SETTINGS___.░░▒▓███
+\input{settings/encoding}
+\input{settings/fonts}
+\input{settings/pageadjustments}
+\input{settings/functions}
+\input{settings/bib}
+\input{settings/headerfooter}
+\input{settings/maths}
+\input{settings/codelistings}
+\input{settings/microtype}
+\input{settings/labels}
+\input{settings/overlays}
+\input{settings/lastload}
+\input{content/_Abbreviations}
+
+\begin{document}
+
+% ---------------------------------------------------------------------------
+% ------------------------------ TEXT PRÄAMBEL ------------------------------
+% ---------------------------------------------------------------------------
+
+% ███▓▒░░.____ TITLEPAGE ____.░░▒▓███
+\hypersetup{pageanchor=false}			% prevents double counting page numbers
+\pagenumbering{gobble}					% no page numbers
+\include{content/01-Titlepage}			% title page
+
+% ███▓▒░░.____ ABSTRACT ____.░░▒▓███
+\include{content/02-Abstract}
+
+% ███▓▒░░.____ Table of Contents ____.░░▒▓███
+\hypersetup{pageanchor=true}			% start counting
+\pagenumbering{Roman}					% roman page numbers
+
+% adjust spacing within the toc and the LoX pages
+% \begin{spacing}{1.18}
+\include{content/03-TOC}
+
+% ███▓▒░░.____ List of Figures ____.░░▒▓███
+\include{content/04-LOF}
+
+% ███▓▒░░.____ List of Tables ____.░░▒▓███
+\include{content/05-LOT}
+
+% ███▓▒░░.____ List of Source Code ____.░░▒▓███
+% Siehe https://en.wikibooks.org/wiki/LaTeX/Source_Code_Listings
+% http://www.macwrench.de/wiki/Kurztipp_-_Quellcodelistings_in_LaTeX
+\include{content/06-LOC}
+
+% ███▓▒░░.____ List of Abbreviations ____.░░▒▓███
+\include{content/07-LOA}
+% \end{spacing}
+
+
+
+% This turns indentation off for paragraphs following chapter, section, ... This should be at this place, otherwise it will fuck up the layout of TOC, LOF, and other lists coming before.
+\makeatletter
+\let\@afterindenttrue\@afterindentfalse
+\makeatother
+
+% ---------------------------------------------------------------------------
+% --------------------------------- CONTENT ---------------------------------
+% ---------------------------------------------------------------------------
+\pagenumbering{arabic}
+
+
+% CHAPTER 1
+% \draftwatermarkon
+% \SetWatermarkText{Final}
+% \SetWatermarkFontSize{96pt}
+\include{content/10-Intro}
+% \draftwatermarkoff
+
+
+% CHAPTER 2
+% \draftwatermarkon
+% \SetWatermarkText{FINAL}
+% \SetWatermarkFontSize{80pt}
+\include{content/20-Theory}
+% \draftwatermarkoff
+
+
+% CHAPTER 3
+% \draftwatermarkon
+% \SetWatermarkText{FINAL}
+% \SetWatermarkFontSize{80pt}
+\input{content/30-Requirements}
+\input{content/31-UseCase1}
+\input{content/31-UseCase2}
+\input{content/31-UseCase3}
+\input{content/31-UseCase4}
+\input{content/32-FunctionalRequirements}
+\input{content/33-NonFunctionalRequirements}
+\input{content/34-RequirementPrioritization}
+% \draftwatermarkoff
+
+
+% CHAPTER 4
+% \draftwatermarkon
+% \SetWatermarkText{FINAL}
+% \SetWatermarkFontSize{80pt}
+\include{content/40-STOA}
+% \draftwatermarkoff
+
+
+% CHAPTER 5
+% \draftwatermarkon
+% \SetWatermarkText{Pending Review}
+% \SetWatermarkFontSize{80pt}
+\input{content/50-Specification}
+\input{content/51-BoardConfig}
+\input{content/52-Board}
+\input{content/53-QueryStrategy}
+% \draftwatermarkoff
+
+% CHAPTER 6
+% \draftwatermarkon
+% \SetWatermarkText{Pending Review}
+% \SetWatermarkFontSize{80pt}
+\input{content/60-Implementation}
+\input{content/61-TechStack}
+\input{content/62-DevelopmentProcess}
+\input{content/63-Workflow}
+% \draftwatermarkoff
+
+% CHAPTER 7
+% \draftwatermarkon
+% \SetWatermarkText{In-Progress}
+% \SetWatermarkFontSize{80pt}
+\include{content/70-Conclusion}
+% \draftwatermarkoff
+
+
+% ----------------------------------------------------------------------------
+% --------------------------------- APPENDIX ---------------------------------
+% ----------------------------------------------------------------------------
+
+
+\pagenumbering{Alph}	% letter page numbers
+% Anhang
+\include{content/90-Appendix}
+
+% Literaturverzeichnis
+\include{content/91-Bib}
+
+% Statement of authorship
+\include{content/92-SOA}
+
+
+
+
+\end{document}
