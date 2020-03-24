@@ -19,7 +19,7 @@ FOAF terms can describe individuals in various ways. For example, terms like `fo
 
 Regarding the use case, the first goal is to visualize all FOAF terms distributed over the board’s columns, depending on their inherent status value. The second goal is to change a term’s status value by dragging a card (i.e., a FOAF term) to another column. The user can easily change the status of the `depiction` resource from `testing` to `stable` by dragging the corresponding card. This will trigger a graph update, that makes changes persistent. The following image illustrates this idea.
 
-![RDF Kanban Board](demo.png)
+![RDF Kanban Board](img/demo.png)
 
 ------------
 
